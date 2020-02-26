@@ -31,14 +31,21 @@ steps:
     perl -V 
 
 - script: |
-    echo $(builddir)
-    mkdir $(builddir)
-    cd $(builddir)
+    echo "$(builddir)"
+    mkdir "$(builddir)"
+    cd "$(builddir)"
     dir /s
     curl -O "$(star-src)"
     dir /s
-    tar -xvzf "$(builddir)\$(star-tgz)"
+    tar -xvzf "$(star-tgz)"
     dir /s
+    
+- script: |    
+    cd "$(builddir)\$(star-fullname)"
+    perl Configure.pl --prefix=C:\rakudo --gen-moar
+    nmake install
+    nmake msi
+  
 
 #- powershell: |
 #    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)\$(star-tgz)"
