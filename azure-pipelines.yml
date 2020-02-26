@@ -17,7 +17,7 @@ strategy:
 #    mac:
 #      imageName: 'macos-10.14'
     windows:
-       imageName: 'windows-latest'
+       imageName: 'windows-2019'
 #      imageName: 'vs2017-win2016'
 
 pool:
@@ -31,11 +31,22 @@ steps:
     which perl
     perl -v
     perl -V
-    
+  displayName: Check various commands
+  
 - script: |
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
     which nmake
     echo %VSINSTALLDIR%
+  displayName: Check VC2019 nmake
+  
+- script: choco install activeperl
+  displayName: Install ActivePerl
+
+- script: |
+    which perl
+    perl -v
+    perl -V
+  displayName: Check ActivePerl
 
 - script: |
     echo "$(builddir)"
