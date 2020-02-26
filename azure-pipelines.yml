@@ -4,8 +4,9 @@
 variables:
   star-year: 2020
   star-month: 01
-  star-name: rakudo-star-$(star-year).$(star-month)
-  star-tgz: $(star-name).tar.gz
+  star-name: rakudo-star
+  star-fullname: $(star-name)-$(star-year).$(star-month)
+  star-tgz: $(star-fullname).tar.gz
   star-src: https://rakudo.org/dl/star/$(star-tgz)
   builddir: $(Build.SourcesDirectory)\builddir
 
@@ -40,7 +41,7 @@ steps:
   inputs:
     archiveFilePatterns: "$(builddir)/$(star-tgz)"
     destinationFolder: "$(builddir)/$(star-name)"
-    cleanDestinationFolder: true
+    cleanDestinationFolder: false
 
 - script: dir /s   
 
