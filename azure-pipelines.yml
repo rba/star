@@ -29,7 +29,7 @@ steps:
     which perl
     perl -v
     perl -V
-    which vcvars32.bat
+    which make
     echo %VSINSTALLDIR%
 
 - script: |
@@ -44,10 +44,9 @@ steps:
     
 - script: |    
     cd "$(builddir)\$(star-fullname)"
-    vcvars32.bat
     perl Configure.pl --prefix=C:\rakudo --gen-moar
-    nmake install
-    nmake msi
+    make install
+    make msi
   
 
 #- powershell: |
