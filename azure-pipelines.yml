@@ -28,9 +28,14 @@ steps:
     mkdir $(builddir)
     cd $(builddir)
     
+- script: perl -v
+- script: perl -V    
+    
 - script: |
-    choco install wixtoolset
     choco install activeperl
+    
+- script: perl -v
+- script: perl -V    
     
 - powershell: |
     Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
