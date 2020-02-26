@@ -44,7 +44,6 @@ steps:
   displayName: Install ActivePerl
 
 - script: |
-#    setx path "C:\Perl64\bin;%path%"
     set path="C:\Perl64\bin;%path%"
     which perl
     perl -v
