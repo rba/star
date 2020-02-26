@@ -18,7 +18,6 @@ strategy:
 #      imageName: 'macos-10.14'
     windows:
        imageName: 'windows-2019'
-#      imageName: 'vs2017-win2016'
 
 pool:
   vmImage: $(imageName)
@@ -62,9 +61,15 @@ steps:
 
 - script: |    
     cd "$(builddir)\$(star-fullname)"
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
-    set path="C:\Perl64\bin;%path%"
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+    path "C:\Perl64\bin;%path%"
+    path
     perl Configure.pl --prefix=C:\rakudo --gen-moar
     nmake install
     nmake msi
   displayName: Build and install
+  
+- script: |   
+    cd "$(builddir)\$(star-fullname)"
+    dir /s
+  displayName: Check the build
