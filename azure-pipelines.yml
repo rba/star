@@ -29,6 +29,7 @@ steps:
     which tar
     which curl
     which perl
+    which refreshenv
     perl -v
     perl -V
   displayName: Check various commands
@@ -43,6 +44,8 @@ steps:
   displayName: Install ActivePerl
 
 - script: |
+    which refreshenv
+    refreshenv
     which perl
     perl -v
     perl -V
@@ -52,40 +55,14 @@ steps:
     echo "$(builddir)"
     mkdir "$(builddir)"
     cd "$(builddir)"
-    dir
     curl -O "$(star-src)"
-    dir
     tar -xvzf "$(star-tgz)"
-    dir
-    
+  displayName: Get Rakudo Star and untar
+
 - script: |    
     cd "$(builddir)\$(star-fullname)"
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
     perl Configure.pl --prefix=C:\rakudo --gen-moar
     nmake install
     nmake msi
-  
-
-#- powershell: |
-#    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)\$(star-tgz)"
- 
-#- task: ExtractFiles@1
-#  inputs:
-#    archiveFilePatterns: "$(builddir)/$(star-tgz)"
-#    destinationFolder: "$(builddir)/$(star-name)"
-#    cleanDestinationFolder: false
-
-- script: date /t
-  displayName: Get the date
-  
-- script: dir
-  workingDirectory: $(Agent.BuildDirectory)
-  displayName: List contents of a folder
-  
-- script: |
-    set MYVAR=foo
-    set
-  displayName: Set a variable and then display all
-  env:
-    aVarFromYaml: someValue
-
+  displayName: Build and install
