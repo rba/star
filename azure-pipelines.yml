@@ -33,20 +33,22 @@ steps:
     perl -v
     perl -V    
 
-- script: which tar
+- script: |
+    which tar
+    which wget
 
-- script: tar -xvzf "$(star-src)" -C "$(builddir)/$(star-tgz)"
-
-#- powershell: |
-#    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
+- powershell: |
+    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
 
 - script: dir /s 
-   
-- task: ExtractFiles@1
-  inputs:
-    archiveFilePatterns: "$(builddir)/$(star-tgz)"
-    destinationFolder: "$(builddir)/$(star-name)"
-    cleanDestinationFolder: false
+
+- script: tar -xvzf "$(builddir)/$(star-tgz)" -C "$(builddir)/$(star-name)"
+
+#- task: ExtractFiles@1
+#  inputs:
+#    archiveFilePatterns: "$(builddir)/$(star-tgz)"
+#    destinationFolder: "$(builddir)/$(star-name)"
+#    cleanDestinationFolder: false
 
 - script: dir /s   
 
@@ -64,5 +66,3 @@ steps:
   env:
     aVarFromYaml: someValue
 
-- script: perl -v
-- script: perl -V
