@@ -33,9 +33,7 @@ steps:
     perl -V
     
 - script: |
-    c:
-    cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
-    dir /s vcvars*.bat
+    "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
     which nmake
     echo %VSINSTALLDIR%
 
@@ -51,9 +49,10 @@ steps:
     
 - script: |    
     cd "$(builddir)\$(star-fullname)"
+    "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
     perl Configure.pl --prefix=C:\rakudo --gen-moar
-    make install
-    make msi
+    nmake install
+    nmake msi
   
 
 #- powershell: |
