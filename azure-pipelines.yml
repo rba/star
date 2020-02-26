@@ -1,5 +1,14 @@
 # Build NodeJS Express app using Azure Pipelines
 # https://docs.microsoft.com/azure/devops/pipelines/ecosystems/javascript?view=azure-devops
+
+variables:
+  star-year: 2020
+  star-month: 01
+  star-name: rakudo-star-$(star-year).$(star-month)
+  star-tgz: $(star-name).tar.gz
+  star-src: https://rakudo.org/dl/star/$(star-tgz)
+  builddir: $(Build.SourcesDirectory)/builddir
+
 strategy:
   matrix:
 #    linux:
@@ -13,22 +22,26 @@ pool:
   vmImage: $(imageName)
 
 steps:
-
-- powershell: |
-    Invoke-WebRequest -Uri "https://rakudo.org/dl/star/rakudo-star-2020.01.tar.gz" -OutFile "rakudo-star-2020.01.tar.gz"
-
 - script: |
-    dir /s 
+    mkdir $(builddir)
+    cd $(builddir)
     
 - script: |
-    choco install wixtoolset 
+    choco install wixtoolset
+    choco install activeperl
+    
+- powershell: |
+    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
 
+- script: dir /s 
+   
 - task: ExtractFiles@1
   inputs:
-    archiveFilePatterns: 'rakudo-star-2020.01.tar.gz' 
+    archiveFilePatterns: "$(builddir)/$(star-tgz)"
+    destinationFolder: "$(builddir)/$(star-name)"
+    cleanDestinationFolder: true
 
-- script: |
-    dir /s   
+- script: dir /s   
 
 - script: date /t
   displayName: Get the date
