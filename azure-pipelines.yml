@@ -17,7 +17,7 @@ steps:
 - script: |
     dir /s
 
-- script: |
+- powershell: |
     Invoke-WebRequest -Uri "https://rakudo.org/dl/star/rakudo-star-2020.01.tar.gz" -OutFile "rakudo-star-2020.01.tar.gz"
     
 - script: date /t
