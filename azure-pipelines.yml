@@ -22,6 +22,7 @@ strategy:
 pool:
   vmImage: $(imageName)
 
+steps:
 - script: |
     which tar
     which curl
@@ -29,7 +30,6 @@ pool:
     perl -v
     perl -V 
 
-steps:
 - script: |
     echo $(builddir)
     mkdir $(builddir)
