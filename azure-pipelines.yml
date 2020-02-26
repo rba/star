@@ -28,7 +28,9 @@ steps:
     which curl
     which perl
     perl -v
-    perl -V 
+    perl -V
+    which vcvars32.bat
+    echo %VSINSTALLDIR%
 
 - script: |
     echo "$(builddir)"
@@ -42,6 +44,7 @@ steps:
     
 - script: |    
     cd "$(builddir)\$(star-fullname)"
+    vcvars32.bat
     perl Configure.pl --prefix=C:\rakudo --gen-moar
     nmake install
     nmake msi
