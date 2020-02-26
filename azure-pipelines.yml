@@ -49,6 +49,7 @@ steps:
     
 - script: |    
     cd "$(builddir)\$(star-fullname)"
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
     perl Configure.pl --prefix=C:\rakudo --gen-moar
     nmake install
     nmake msi
