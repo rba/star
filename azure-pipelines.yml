@@ -28,17 +28,17 @@ steps:
     mkdir $(builddir)
     cd $(builddir)
     
-- script: perl -v
-- script: perl -V    
-    
 - script: |
-    choco install activeperl
-    
-- script: perl -v
-- script: perl -V    
-    
-- powershell: |
-    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
+    which perl
+    perl -v
+    perl -V    
+
+- script: which tar
+
+- script: tar -xvzf "$(star-src)" -C "$(builddir)/$(star-tgz)"
+
+#- powershell: |
+#    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
 
 - script: dir /s 
    
