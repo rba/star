@@ -37,12 +37,14 @@ steps:
     which tar
     which curl
 
-- powershell: |
-    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
+#- powershell: |
+#    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)\$(star-tgz)"
+ 
+- script: curl -O "$(star-src)"
 
 - script: dir /s 
 
-- script: tar -xvzf "$(builddir)/$(star-tgz)" -C "$(builddir)/$(star-name)"
+- script: tar -xvzf "$(builddir)\$(star-tgz)"
 
 #- task: ExtractFiles@1
 #  inputs:
