@@ -35,7 +35,7 @@ steps:
 
 - script: |
     which tar
-    which wget
+    which curl
 
 - powershell: |
     Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)/$(star-tgz)"
