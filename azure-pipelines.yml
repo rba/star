@@ -22,37 +22,32 @@ strategy:
 pool:
   vmImage: $(imageName)
 
+- script: |
+    which tar
+    which curl
+    which perl
+    perl -v
+    perl -V 
+
 steps:
 - script: |
     echo $(builddir)
     mkdir $(builddir)
     cd $(builddir)
-    
-- script: |
-    which perl
-    perl -v
-    perl -V    
-
-- script: |
-    which tar
-    which curl
+    dir /s
+    curl -O "$(star-src)"
+    dir /s
+    tar -xvzf "$(builddir)\$(star-tgz)"
+    dir /s
 
 #- powershell: |
 #    Invoke-WebRequest -Uri "$(star-src)" -OutFile "$(builddir)\$(star-tgz)"
  
-- script: curl -O "$(star-src)"
-
-- script: dir /s 
-
-- script: tar -xvzf "$(builddir)\$(star-tgz)"
-
 #- task: ExtractFiles@1
 #  inputs:
 #    archiveFilePatterns: "$(builddir)/$(star-tgz)"
 #    destinationFolder: "$(builddir)/$(star-name)"
 #    cleanDestinationFolder: false
-
-- script: dir /s   
 
 - script: date /t
   displayName: Get the date
