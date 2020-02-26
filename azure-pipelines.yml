@@ -33,7 +33,9 @@ steps:
     perl -V
     
 - script: |
-    set
+    c:
+    cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+    dir /s vcvars32.bat
     which nmake
     echo %VSINSTALLDIR%
 
