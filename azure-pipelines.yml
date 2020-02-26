@@ -44,8 +44,8 @@ steps:
   displayName: Install ActivePerl
 
 - script: |
-    which refreshenv
-    refreshenv
+#    setx path "C:\Perl64\bin;%path%"
+    set path="C:\Perl64\bin;%path%"
     which perl
     perl -v
     perl -V
@@ -62,6 +62,7 @@ steps:
 - script: |    
     cd "$(builddir)\$(star-fullname)"
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+    set path="C:\Perl64\bin;%path%"
     perl Configure.pl --prefix=C:\rakudo --gen-moar
     nmake install
     nmake msi
