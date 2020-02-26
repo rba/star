@@ -14,12 +14,22 @@ pool:
 
 steps:
 
-- script: |
-    dir /s
-
 - powershell: |
     Invoke-WebRequest -Uri "https://rakudo.org/dl/star/rakudo-star-2020.01.tar.gz" -OutFile "rakudo-star-2020.01.tar.gz"
+
+- script: |
+    dir /s 
     
+- script: |
+    choco install wixtoolset 
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: 'rakudo-star-2020.01.tar.gz' 
+
+- script: |
+    dir /s   
+
 - script: date /t
   displayName: Get the date
   
@@ -33,3 +43,6 @@ steps:
   displayName: Set a variable and then display all
   env:
     aVarFromYaml: someValue
+
+- script: perl -v
+- script: perl -V
