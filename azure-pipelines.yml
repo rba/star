@@ -1,19 +1,35 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-trigger:
-- master
+# Build NodeJS Express app using Azure Pipelines
+# https://docs.microsoft.com/azure/devops/pipelines/ecosystems/javascript?view=azure-devops
+strategy:
+  matrix:
+#    linux:
+#      imageName: 'ubuntu-16.04'
+#    mac:
+#      imageName: 'macos-10.14'
+    windows:
+      imageName: 'vs2017-win2016'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: $(imageName)
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    dir /s
+
+- script: |
+    Invoke-WebRequest -Uri "https://rakudo.org/dl/star/rakudo-star-2020.01.tar.gz" -OutFile "rakudo-star-2020.01.tar.gz"
+    
+- script: date /t
+  displayName: Get the date
+  
+- script: dir
+  workingDirectory: $(Agent.BuildDirectory)
+  displayName: List contents of a folder
+  
+- script: |
+    set MYVAR=foo
+    set
+  displayName: Set a variable and then display all
+  env:
+    aVarFromYaml: someValue
