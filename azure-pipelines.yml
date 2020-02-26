@@ -17,19 +17,24 @@ strategy:
 #    mac:
 #      imageName: 'macos-10.14'
     windows:
-      imageName: 'vs2017-win2016'
+       imageName: 'windows-latest'
+#      imageName: 'vs2017-win2016'
 
 pool:
   vmImage: $(imageName)
 
 steps:
 - script: |
+    path
     which tar
     which curl
     which perl
     perl -v
     perl -V
-    which make
+    
+- script: |
+    set
+    which nmake
     echo %VSINSTALLDIR%
 
 - script: |
